@@ -1,0 +1,42 @@
+{
+  "name": "typescpript-base-project",
+  "version": "1.0.0",
+  "description": "Express resfull API with typedi DI configured for VS",
+  "main": "./dist/tsc/main.js",
+  "author": "Enrique Plaza",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "test": "mocha -r ts-node/register 'test/**/*.ts'",
+    "clean": "rm -rf dist build package",
+    "ts-node": "ts-node",
+    "docs": "typedoc --entryPoints src/main.ts",
+    "build": "tsc -p tsconfig.json",
+    "build-all": "yarn clean && yarn build && yarn esbuild-node && yarn esbuild-browser"
+  },
+  "dependencies": {
+    "ajv": "^8.6.2",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.2",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^2.3.1",
+    "typedi": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.7.5",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "@types/express": "^4.17.13",
+    "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "mocha": "^9.1.1",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  }
+}
