@@ -15,7 +15,7 @@ export interface ICarDomain {
   /**
    * Unique car identifier
    */
-  serieNumber: number;
+   serialUUID?: string;
   /**
    * Car brand, eg. Ford, Mercedes
    */

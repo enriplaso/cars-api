@@ -1,8 +1,10 @@
 const CarSchema = {
-  serieNumber: {
-    type: Number,
-    required: true,
+  serialUUID: {
+    type: String,
     unique: true,
+    pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+    minLength: 36,
+    maxLength: 36,
   },
   brand: {
     type: String,
@@ -10,7 +12,7 @@ const CarSchema = {
   },
   color: {
     type: String,
-    enum: ["Blue", "Red", "Black", "White", "Yellow"],
+    enum: ['Blue', 'Red', 'Black', 'White', 'Yellow'],
     required: true,
   },
   model: {

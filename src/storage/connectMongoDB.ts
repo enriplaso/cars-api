@@ -1,6 +1,14 @@
-import { ConnectOptions, connect } from "mongoose";
+import { ConnectOptions, connect } from 'mongoose';
 
-const  connectMongoDB = async (mongoURI: string, dbName?:string, user?:string, pass?:string ) => {
+
+/**
+ * Creates a MongoDb connection with mongoose when is called 
+ * @param mongoURI 
+ * @param dbName 
+ * @param user 
+ * @param pass 
+ */
+export const connectMongoDB = async (mongoURI: string, dbName?: string, user?: string, pass?: string) => {
   try {
     const options: ConnectOptions = {
       dbName,
@@ -9,7 +17,7 @@ const  connectMongoDB = async (mongoURI: string, dbName?:string, user?:string, p
     };
 
     await connect(mongoURI, options);
-    console.log("MongoDB Connected...");
+    console.log('MongoDB Connected...');
   } catch (error) {
     console.error(error);
     // Exit process with failure
@@ -17,4 +25,3 @@ const  connectMongoDB = async (mongoURI: string, dbName?:string, user?:string, p
   }
 };
 
-export default connectMongoDB;

@@ -5,7 +5,7 @@ import express from 'express';
 
 import Container from 'typedi';
 import CarController from './controller/CarController';
-import connectMongoDB from './storage/connectMongoDB';
+import {connectMongoDB} from './storage/connectMongoDB';
 
 const main = async () => {
   const app = express();
@@ -14,7 +14,7 @@ const main = async () => {
 
   connectMongoDB('mongodb://localhost:27017', "carsdb");
 
-  app.get('/cars', (req, res) => carController.getAllCars(req, res));
+  app.get('/cars', (req, res) => carController.createNewCar(req, res));
 
   app.listen(3000, () => {
     console.log('Server started');
