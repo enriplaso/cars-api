@@ -1,16 +1,11 @@
 import { Document, Schema, Model, model } from 'mongoose';
+import { ICarDomain } from '../domain/ICarDomain';
 import CarSchema from '../schemas/carSchema';
 
-// We can reuse this model 
-export interface ICar {
-  brand: string;
-  color: string;
-  model: string;
-  serieNumber: number;
-  engine: string;
-}
-
-export interface ICarModel extends ICar, Document {}
+/**
+ * Mongose Car Model, this would be equivalent to a DAO
+ */
+export interface ICarModel extends ICarDomain, Document {}
 
 const carSchema = new Schema(CarSchema);
 
