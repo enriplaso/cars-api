@@ -12,7 +12,7 @@ const main = async () => {
 
   const carController = Container.get(CarController);
 
-  connectMongoDB('mongodb://localhost:27017');
+  connectMongoDB('mongodb://localhost:27017', "carsdb");
 
   app.get('/cars', (req, res) => carController.getAllCars(req, res));
 
