@@ -1,5 +1,6 @@
 import { fail } from 'assert';
 import { expect } from 'chai';
+import { randomUUID } from 'crypto';
 import 'mocha';
 import { CarError } from '../../../src/error/CarError';
 import { ErrorCodes } from '../../../src/error/ErrorCodes';
@@ -50,7 +51,7 @@ describe('CarService tests', function () {
         }
     });
 
-    it.only('Should throw an error when the UUID has a wrong format', async function () {
+    it('Should throw an error when the UUID has a wrong format', async function () {
         const carService = new CarService();
         const car: ICarDomain = {
             serialUUID: 'wrong format',
@@ -82,5 +83,57 @@ describe('CarService tests', function () {
     it('Should not throw if tries to delete with non existing ID', async function () {
         const carService = new CarService();
         await carService.deleteBySerialUUID('anyUUID');
+    });
+
+    it('Should find a car given the UUID', async function () {
+        const carService = new CarService();
+        const car: ICarDomain = {
+            brand: 'ford',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        const serialUUID: string = await carService.create(car);
+
+        const foundCar = await carService.getCarBySerialUUID(serialUUID);
+
+        expect(foundCar).to.be.not.undefined;
+        expect(foundCar.brand).to.equal(car.brand);
+        expect(foundCar.color).to.equal(car.color);
+        expect(foundCar.model).to.equal(car.model);
+    });
+
+    it('Should Should throw NoFound error when the car is not found given the UUID', async function () {
+        const carService = new CarService();
+        const car: ICarDomain = {
+            brand: 'ford',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        await carService.create(car);
+        const nonExistingSerialUUID = randomUUID();
+
+        try {
+            await carService.getCarBySerialUUID(nonExistingSerialUUID);
+            fail('should fail');
+        } catch (error) {
+            expect(error instanceof CarError).to.be.true;
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarStorage.NoFound);
+        }
+    });
+
+    it.only('Should Should Update given the UUID', async function () {
+        const carService = new CarService();
+        const car: ICarDomain = {
+            brand: 'ford',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        const createdUUID = await carService.create(car);
+
+        const updated = (await carService.updateSingleProperties(createdUUID, { brand: 'Mercedes', color: Color.BLACK })) as ICarDomain;
+
+        console.log(updated);
+
+        expect(updated).to.be.not.undefined;
     });
 });

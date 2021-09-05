@@ -3,7 +3,6 @@ import { Service } from 'typedi';
 import { ICarDomain } from '../storage/domain/ICarDomain';
 import { CarModel, ICarModel } from '../storage/models/CarModel';
 import { ICarService } from './ICarService';
-import { Property } from '../model/Property';
 import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';
 
@@ -23,7 +22,6 @@ export class CarService implements ICarService {
             const createdCar: ICarDomain = await carToStore.save();
             return createdCar.serialUUID as string;
         } catch (error) {
-            console.info(ErrorCodes.CarStorage.General);
             throw error instanceof CarError ? error : new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
         }
     }
@@ -43,14 +41,20 @@ export class CarService implements ICarService {
             }
             return foundCar;
         } catch (error) {
-            throw new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
+            throw error instanceof CarError ? error : new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
         }
     }
 
-    async updateSingleProperties(serialNumber: string, properties: Array<Property>): Promise<ICarDomain> {
-        console.info(serialNumber);
+    async updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain> {
+        console.info(serialUUID);
         console.info(properties);
-        throw new Error('Method not implemented.');
+        try {
+            const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, {new: true})) as ICarDomain;
+            //TODO: check if exists
+            return updated;
+        } catch (error) {
+            throw error instanceof CarError ? error : new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
+        }
     }
 
     async getMetadata(): Promise<any> {

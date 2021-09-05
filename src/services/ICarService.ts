@@ -25,7 +25,7 @@ export interface ICarService {
      * @param serialNumber
      * @param properties
      */
-    updateSingleProperties(serialUUID: string, properties: Array<Property>): Promise<ICarDomain>;
+    updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain>;
 
     /**
      * Retuns meta-data information of the all cars in the system. E.g: Number of cars, db size etc..
