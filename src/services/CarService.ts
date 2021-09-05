@@ -46,11 +46,11 @@ export class CarService implements ICarService {
     }
 
     async updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain> {
-        console.info(serialUUID);
-        console.info(properties);
         try {
-            const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, {new: true})) as ICarDomain;
-            //TODO: check if exists
+            const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, { new: true })) as ICarDomain;
+            if (!updated) {
+                throw new CarError(ErrorCodes.CarStorage.NoFound, `Could not update, the car with UUID: ${serialUUID} was not found`);
+            }
             return updated;
         } catch (error) {
             throw error instanceof CarError ? error : new CarError(ErrorCodes.CarStorage.General, (error as Error).message);

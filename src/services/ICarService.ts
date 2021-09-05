@@ -1,4 +1,3 @@
-import { Property } from '../model/Property';
 import { ICarDomain } from '../storage/domain/ICarDomain';
 
 export interface ICarService {

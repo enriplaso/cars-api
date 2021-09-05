@@ -121,7 +121,7 @@ describe('CarService tests', function () {
         }
     });
 
-    it.only('Should Should Update given the UUID', async function () {
+    it('Should update a car given the UUID and single properties', async function () {
         const carService = new CarService();
         const car: ICarDomain = {
             brand: 'ford',
@@ -132,8 +132,23 @@ describe('CarService tests', function () {
 
         const updated = (await carService.updateSingleProperties(createdUUID, { brand: 'Mercedes', color: Color.BLACK })) as ICarDomain;
 
-        console.log(updated);
+        expect(updated.brand).to.equal('Mercedes');
+        expect(updated.color).to.equal(Color.BLACK);
+        expect(updated.model).to.equal(car.model);
+    });
 
-        expect(updated).to.be.not.undefined;
+    it('Should throw an error while updating if given UUID does not exists', async function () {
+        const carService = new CarService();
+
+        const nonExistingUUID = randomUUID();
+
+        try {
+            await carService.updateSingleProperties(nonExistingUUID, { brand: 'Mercedes', color: Color.BLACK });
+            fail('should fail');
+        } catch (error) {
+            console.info(error);
+            expect(error instanceof CarError).to.be.true;
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarStorage.NoFound);
+        }
     });
 });
