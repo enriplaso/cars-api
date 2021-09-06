@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { Service } from 'typedi';
 import { ICarDomain } from '../storage/domain/ICarDomain';
 import { CarModel, ICarModel } from '../storage/models/CarModel';
@@ -15,8 +14,6 @@ export class CarService implements ICarService {
                 if (foundCar) {
                     throw new CarError(ErrorCodes.CarStorage.AlreadyExists, `UUID ${car.serialUUID} already exists`);
                 }
-            } else {
-                car.serialUUID = randomUUID();
             }
             const carToStore = new CarModel(car);
             const createdCar: ICarDomain = await carToStore.save();
@@ -58,6 +55,31 @@ export class CarService implements ICarService {
     }
 
     async getMetadata(): Promise<any> {
-        throw new Error('Method not implemented.');
+        const aggregatorOpts = [
+            {
+                //Processes multiple aggregation pipelines
+                $facet: {
+                    color: [
+                        {
+                            $group: {
+                                _id: '$color',
+                                count: { $sum: 1 },
+                            },
+                        },
+                    ],
+                    brand: [
+                        {
+                            $group: {
+                                _id: '$brand',
+                                count: { $sum: 1 },
+                            },
+                        },
+                    ],
+                    all: [{ $group: { _id: null, count: { $sum: 1 } } }, { $project: { _id: 0 } }],
+                },
+            },
+        ];
+        const res = await CarModel.aggregate(aggregatorOpts).exec();
+        console.log(JSON.stringify(res));
     }
 }

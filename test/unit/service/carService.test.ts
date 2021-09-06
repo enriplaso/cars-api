@@ -68,6 +68,23 @@ describe('CarService tests', function () {
         }
     });
 
+    it('Should throw an error when the additional properties are added ', async function () {
+        const carService = new CarService();
+        const car: ICarDomain = {
+            serialUUID: 'wrong format',
+            brand: 'ford',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        try {
+            await carService.create(car);
+            fail('should fail');
+        } catch (error) {
+            expect(error instanceof CarError).to.be.true;
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarStorage.General);
+        }
+    });
+
     it('Should Delete a car given the UUID', async function () {
         const carService = new CarService();
         const car: ICarDomain = {
@@ -150,5 +167,28 @@ describe('CarService tests', function () {
             expect(error instanceof CarError).to.be.true;
             expect((error as CarError).code).to.be.equal(ErrorCodes.CarStorage.NoFound);
         }
+    });
+
+    it('Should grt ', async function () {
+        const carService = new CarService();
+        let car: ICarDomain = {
+            brand: 'ford',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        await carService.create(car);
+        await carService.create(car);
+
+        car = {
+            brand: 'Mercedes',
+            color: Color.BLUE,
+            model: 'S333',
+        };
+        await carService.create(car);
+        await carService.create(car);
+
+        await carService.create(car);
+
+        await carService.getMetadata();
     });
 });
