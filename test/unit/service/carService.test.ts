@@ -169,16 +169,15 @@ describe('CarService tests', function () {
         }
     });
 
-    it('Should grt ', async function () {
+    it('Should get cars metadata', async function () {
         const carService = new CarService();
         let car: ICarDomain = {
-            brand: 'ford',
+            brand: 'Ford',
             color: Color.BLUE,
             model: 'S333',
         };
         await carService.create(car);
         await carService.create(car);
-
         car = {
             brand: 'Mercedes',
             color: Color.BLUE,
@@ -186,9 +185,25 @@ describe('CarService tests', function () {
         };
         await carService.create(car);
         await carService.create(car);
-
         await carService.create(car);
 
-        await carService.getMetadata();
+        const carMetaData = await carService.getMetadata();
+        console.info(carMetaData);
+
+        expect(carMetaData.numberOfCars).to.equal(5);
+        expect(carMetaData.colors?.Blue).to.equal(5);
+        expect(carMetaData.brands?.Mercedes).to.equal(3);
+        expect(carMetaData.brands?.Ford).to.equal(2);
+    });
+
+    it('Should NOT Throw an error if there is no cars in the DB', async function () {
+        const carService = new CarService();
+
+        const carMetaData = await carService.getMetadata();
+        console.info(carMetaData);
+
+        expect(carMetaData.numberOfCars).to.equal(0);
+        expect(carMetaData.colors).to.be.empty;
+        expect(carMetaData.brands).to.be.empty;
     });
 });

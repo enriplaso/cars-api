@@ -14,8 +14,10 @@ schema.pre<ICarModel>('save', function () {
     }
 });
 
+schema.query
 /**
  * Mongose Car Model, this would be equivalent to a DAO
  *
  */
 export const CarModel: Model<ICarModel> = model('Car', new Schema(schema));
+

@@ -4,6 +4,7 @@ import { CarModel, ICarModel } from '../storage/models/CarModel';
 import { ICarService } from './ICarService';
 import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';
+import { ICarMetaData } from '../storage/domain/ICarMetadata';
 
 @Service()
 export class CarService implements ICarService {
@@ -54,7 +55,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async getMetadata(): Promise<any> {
+    async getMetadata(): Promise<ICarMetaData> {
         const aggregatorOpts = [
             {
                 //Processes multiple aggregation pipelines
@@ -79,7 +80,31 @@ export class CarService implements ICarService {
                 },
             },
         ];
-        const res = await CarModel.aggregate(aggregatorOpts).exec();
-        console.log(JSON.stringify(res));
+        try {
+            const rawMetadata = await CarModel.aggregate(aggregatorOpts).exec();
+            return this.transformRawMetadata(rawMetadata);
+        } catch (error) {
+            throw new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
+        }
+    }
+
+    private transformRawMetadata(rawMetadata: Array<any>): ICarMetaData {
+        const metadata: ICarMetaData = {
+            numberOfCars: rawMetadata[0].all[0]?.count || 0,
+            colors: {},
+            brands: {},
+        };
+
+        if (metadata.numberOfCars !== 0) {
+            rawMetadata[0].color.forEach((element: { _id: string; count: number }) => {
+                Object.assign(metadata.colors, { [element._id]: element.count });
+            });
+
+            rawMetadata[0].brand.forEach((element: { _id: string; count: number }) => {
+                Object.assign(metadata.brands, { [element._id]: element.count });
+            });
+        }
+
+        return metadata;
     }
 }
