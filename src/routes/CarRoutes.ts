@@ -1,12 +1,21 @@
-import express from 'express';
-import { Service } from 'typedi';
+import { Application } from 'express';
 import { CarController } from '../controller/CarController';
-
-@Service()
+import { schemaValidation } from '../midlewares/schemaValidation';
+import { SchemaValidator } from '../validation/schemaValidator';
+//TODO change to function
 export class CarRoutes {
-    constructor(private readonly carController: CarController) {}
+    constructor(
+        private readonly app: Application,
+        private readonly carController: CarController,
+        private readonly validateCar: SchemaValidator,
+    ) {}
 
-    configureRoutes(app: express.Application) {
-        app.route(`/cars`).post(this.carController.createNewCar.bind(this.carController));
+    configureRoutes() {
+        this.app
+            .route(`/cars`)
+            .post(
+                schemaValidation(this.validateCar.validateCar.bind(this.validateCar)),
+                this.carController.createNewCar.bind(this.carController),
+            );
     }
 }
