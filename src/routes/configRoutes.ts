@@ -28,4 +28,5 @@ export const configureCarRoutes = (app: Application, carController: CarControlle
 
 export const configureUserRoutes = (app: Application, userController: UserController) => {
     app.route(`/signup`).post(userController.signUp.bind(userController));
+    app.route(`/login`).post(userController.login.bind(userController));
 };

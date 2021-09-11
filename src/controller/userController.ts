@@ -15,14 +15,33 @@ const ROUNDS = 10;
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    //public async login(req: Request, res: Response): Promise<void> {}
+    public async login(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await this.userService.get(req.body?.email);
+
+            bcrypt.compare(req.body.password, user.password, (error, match) => {
+                if (error) {
+                    return this.handleError(error, res);
+                }
+
+                if (!match) {
+                    return this.handleError(new UserError(ErrorCodes.UserLogin.invalidPassword, 'Passwords do not match'), res);
+                }
+
+                res.status(StatusCodes.OK).json({ token: this.generateToken(user) });
+            });
+        } catch (error) {
+            this.handleError(error, res);
+        }
+    }
+
     public async signUp(req: Request, res: Response): Promise<void> {
         bcrypt.hash(req.body.password, ROUNDS, async (error, hash) => {
             if (error) {
                 return this.handleError(error, res);
             }
             try {
-                const newUser: IUserDomain = { email: req.body.email, password: hash };
+                const newUser: IUserDomain = { email: req.body?.email, password: hash };
 
                 await this.userService.create(newUser);
                 res.status(StatusCodes.CREATED).json({ token: this.generateToken(newUser) });
@@ -44,6 +63,9 @@ export class UserController {
                     return;
                 case ErrorCodes.UserStorage.NoFound:
                     res.status(StatusCodes.NOT_FOUND).send({ error: error.code });
+                    return;
+                case ErrorCodes.UserLogin.invalidPassword:
+                    res.status(StatusCodes.FORBIDDEN).send({ error: error.code });
                     return;
             }
         }

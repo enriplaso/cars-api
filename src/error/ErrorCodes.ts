@@ -15,4 +15,8 @@ export const ErrorCodes = {
         NoFound: 'com.user.storage.NoFound',
         AlreadyExists: 'com.user.storage.NoFound',
     },
+
+    UserLogin: {
+        invalidPassword: 'com.user.login.password.invalid',
+    },
 };
