@@ -23,7 +23,7 @@ const main = async () => {
     //configure routes
     configureRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
 
-    connectMongoDB('mongodb://localhost:27017', 'carsdb');
+    connectMongoDB(process.env['MONGO_URI'] || 'mongodb://localhost:27017', 'carsdb');
 
     app.listen(3000, () => {
         console.log('Server started');
