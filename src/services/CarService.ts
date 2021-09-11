@@ -8,7 +8,7 @@ import { ICarMetaData } from '../storage/domain/ICarMetadata';
 
 @Service()
 export class CarService implements ICarService {
-    async create(car: ICarDomain): Promise<string> {
+    public async create(car: ICarDomain): Promise<string> {
         try {
             if (car.serialUUID) {
                 const foundCar = (await CarModel.findOne({ serialUUID: car.serialUUID })) as ICarModel;
@@ -24,7 +24,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async deleteBySerialUUID(serialUUID: string): Promise<void> {
+    public async deleteBySerialUUID(serialUUID: string): Promise<void> {
         try {
             await CarModel.deleteOne({ serialUUID });
         } catch (error) {
@@ -32,7 +32,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async getBySerialUUID(serialUUID: string): Promise<ICarDomain> {
+    public async getBySerialUUID(serialUUID: string): Promise<ICarDomain> {
         try {
             const foundCar = (await CarModel.findOne({ serialUUID }, { _id: 0, __v: 0 })) as ICarModel;
             if (!foundCar) {
@@ -44,7 +44,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain> {
+    public async updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain> {
         try {
             const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, {
                 new: true,
@@ -59,7 +59,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async getMetadata(): Promise<ICarMetaData> {
+    public async getMetadata(): Promise<ICarMetaData> {
         const aggregatorOpts = [
             {
                 //Processes multiple aggregation pipelines

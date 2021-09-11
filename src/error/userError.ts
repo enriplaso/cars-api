@@ -1,8 +1,7 @@
-import { BaseError } from "./baseError";
+import { BaseError } from './baseError';
 
-export class CarError extends BaseError {
+export class UserError extends BaseError {
     constructor(code: string, message: string) {
         super(code, message);
-    
     }
 }
