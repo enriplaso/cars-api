@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { ICarDomain } from '../storage/domain/ICarDomain';
-import { CarModel, ICarModel } from '../storage/models/CarModel';
+import { CarModel, ICarModel } from '../storage/models/carModel';
 import { ICarService } from './ICarService';
 import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';

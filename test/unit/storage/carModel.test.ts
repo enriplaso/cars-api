@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { randomUUID } from 'crypto';
 import 'mocha';
 import { Color } from '../../../src/storage/domain/ICarDomain';
-import { CarModel } from '../../../src/storage/models/CarModel';
+import { CarModel } from '../../../src/storage/models/carModel';
 import * as dbHandler from '../helper/dbHandle';
 
 describe('CarModel tests', function () {

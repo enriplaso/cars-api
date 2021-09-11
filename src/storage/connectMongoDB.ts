@@ -2,7 +2,7 @@ import { ConnectOptions, connect } from 'mongoose';
 
 
 /**
- * Creates a MongoDb connection with mongoose when is called 
+ * Creates a MongoDb connection with mongoose
  * @param mongoURI 
  * @param dbName 
  * @param user 

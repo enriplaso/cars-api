@@ -4,6 +4,7 @@
 /lib/
 /dist/
 /docs/
+/data/
 .idea/*
 
 .DS_Store
