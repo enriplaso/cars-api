@@ -2,8 +2,8 @@ import { Service } from 'typedi';
 import { ICarDomain } from '../storage/domain/ICarDomain';
 import { CarModel, ICarModel } from '../storage/models/carModel';
 import { ICarService } from './ICarService';
-import { CarError } from '../error/CarError';
-import { ErrorCodes } from '../error/ErrorCodes';
+import { CarError } from '../error/carError';
+import { ErrorCodes } from '../error/errorCodes';
 import { ICarMetaData } from '../storage/domain/ICarMetadata';
 
 @Service()

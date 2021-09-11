@@ -2,8 +2,8 @@ import { Service } from 'typedi';
 import { ISchemaValidator } from './ISchemaValidator';
 import { AnyValidateFunction } from 'ajv/dist/core';
 import { Request } from 'express';
-import { CarError } from '../error/CarError';
-import { ErrorCodes } from '../error/ErrorCodes';
+import { CarError } from '../error/carError';
+import { ErrorCodes } from '../error/errorCodes';
 
 @Service()
 export class SchemaValidator implements ISchemaValidator {

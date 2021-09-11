@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { Service } from 'typedi';
-import { CarError } from '../error/CarError';
-import { ErrorCodes } from '../error/ErrorCodes';
+import { CarError } from '../error/carError';
+import { ErrorCodes } from '../error/errorCodes';
 import { CarService } from '../services/carService';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+
 @Service()
 export class CarController {
     constructor(private readonly carService: CarService) {}

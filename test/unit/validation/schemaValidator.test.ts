@@ -8,8 +8,8 @@ import { carJsonSchema, serialUUIDJsonSchema, singlePropertiesJsonSchema } from 
 import Ajv from 'ajv';
 import { Request } from 'express';
 import { fail } from 'assert';
-import { CarError } from '../../../src/error/CarError';
-import { ErrorCodes } from '../../../src/error/ErrorCodes';
+import { CarError } from '../../../src/error/carError';
+import { ErrorCodes } from '../../../src/error/errorCodes';
 
 describe('Schema validation tests', function () {
     this.timeout(120000);

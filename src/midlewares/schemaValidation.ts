@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { CarError } from '../error/CarError';
-import { ErrorCodes } from '../error/ErrorCodes';
+import { CarError } from '../error/carError';
+import { ErrorCodes } from '../error/errorCodes';
 import { StatusCodes } from 'http-status-codes';
 
 /**
