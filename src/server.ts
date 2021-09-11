@@ -4,10 +4,11 @@ import express from 'express';
 import Container from 'typedi';
 import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
-import { configureRoutes } from './routes/carRoutes';
+import { configureCarRoutes, configureUserRoutes } from './routes/configRoutes';
 import { SchemaValidator } from './validation/schemaValidator';
 import { carJsonSchema, serialUUIDJsonSchema, singlePropertiesJsonSchema } from './validation/schemas/requestSchemas';
 import Ajv from 'ajv';
+import { UserController } from './controller/userController';
 
 const app = express();
 app.use(express.json());
@@ -20,8 +21,8 @@ Container.set(
 );
 
 //configure routes
-configureRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
-
+configureCarRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
+configureUserRoutes(app,Container.get(UserController));
 //Db connection
 connectMongoDB(process.env['MONGO_URI'] || 'mongodb://localhost:27017', 'carsdb');
 

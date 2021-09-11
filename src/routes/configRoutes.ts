@@ -1,9 +1,10 @@
 import { Application } from 'express';
 import { CarController } from '../controller/carController';
+import { UserController } from '../controller/userController';
 import { schemaValidation } from '../midlewares/schemaValidation';
 import { SchemaValidator } from '../validation/schemaValidator';
 
-export const configureRoutes = (app: Application, carController: CarController, validateCar: SchemaValidator) => {
+export const configureCarRoutes = (app: Application, carController: CarController, validateCar: SchemaValidator) => {
     app.route(`/car`).post(schemaValidation(validateCar.validateCar.bind(validateCar)), carController.createNewCar.bind(carController));
 
     app.route(`/car/:serialUUID`).delete(
@@ -23,4 +24,8 @@ export const configureRoutes = (app: Application, carController: CarController, 
     );
 
     app.route(`/metadata`).get(carController.getMetadata.bind(carController));
+};
+
+export const configureUserRoutes = (app: Application, userController: UserController) => {
+    app.route(`/signup`).post(userController.signUp.bind(userController));
 };

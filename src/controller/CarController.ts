@@ -9,7 +9,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 export class CarController {
     constructor(private readonly carService: CarService) {}
 
-    public async createNewCar(req: Request, res: Response) {
+    public async createNewCar(req: Request, res: Response): Promise<void> {
         try {
             const CarUUID = await this.carService.create(req.body);
             res.status(StatusCodes.CREATED).send({ serialUUID: CarUUID });
@@ -18,7 +18,7 @@ export class CarController {
         }
     }
 
-    public async deletCarBySerialUUID(req: Request, res: Response) {
+    public async deletCarBySerialUUID(req: Request, res: Response): Promise<void> {
         try {
             await this.carService.deleteBySerialUUID(req.params.serialUUID);
             res.status(StatusCodes.OK).send();
@@ -27,7 +27,7 @@ export class CarController {
         }
     }
 
-    public async getCarBySerialUUID(req: Request, res: Response) {
+    public async getCarBySerialUUID(req: Request, res: Response): Promise<void> {
         try {
             const foundCar = await this.carService.getBySerialUUID(req.params.serialUUID);
             res.status(StatusCodes.OK).send(foundCar);
@@ -36,7 +36,7 @@ export class CarController {
         }
     }
 
-    public async updateSingleProperties(req: Request, res: Response) {
+    public async updateSingleProperties(req: Request, res: Response): Promise<void> {
         try {
             const udatedCar = await this.carService.updateSingleProperties(req.params.serialUUID, req.body);
             res.status(StatusCodes.OK).send(udatedCar);
@@ -45,7 +45,7 @@ export class CarController {
         }
     }
 
-    public async getMetadata(_: Request, res: Response) {
+    public async getMetadata(_: Request, res: Response): Promise<void> {
         try {
             const metadata = await this.carService.getMetadata();
             res.status(StatusCodes.OK).send(metadata);
@@ -54,7 +54,7 @@ export class CarController {
         }
     }
 
-    private handleError(error: Error | any, res: Response) {
+    private handleError(error: Error | any, res: Response): void {
         console.warn(error);
         if (error instanceof CarError) {
             switch (error.code) {
