@@ -60,15 +60,15 @@ export class CarController {
             switch (error.code) {
                 case ErrorCodes.CarStorage.AlreadyExists:
                     res.status(StatusCodes.CONFLICT).send({ error: error.code });
-                    break;
+                    return;
 
                 case ErrorCodes.CarStorage.General:
                     res.status(StatusCodes.BAD_REQUEST).send({ error: error.code });
-                    break;
+                    return;
 
                 case ErrorCodes.CarStorage.NoFound:
                     res.status(StatusCodes.NOT_FOUND).send({ error: error.code });
-                    break;
+                    return;
             }
         }
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: ReasonPhrases.INTERNAL_SERVER_ERROR });
