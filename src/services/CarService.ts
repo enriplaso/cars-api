@@ -34,7 +34,7 @@ export class CarService implements ICarService {
 
     async getBySerialUUID(serialUUID: string): Promise<ICarDomain> {
         try {
-            const foundCar = (await CarModel.findOne({ serialUUID })) as ICarModel;
+            const foundCar = (await CarModel.findOne({ serialUUID }, { _id: 0, __v: 0 })) as ICarModel;
             if (!foundCar) {
                 throw new CarError(ErrorCodes.CarStorage.NoFound, `Car with UUID: ${serialUUID} was not found`);
             }
@@ -46,7 +46,10 @@ export class CarService implements ICarService {
 
     async updateSingleProperties(serialUUID: string, properties: { [Key: string]: string }): Promise<ICarDomain> {
         try {
-            const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, { new: true })) as ICarDomain;
+            const updated = (await CarModel.findOneAndUpdate({ serialUUID }, properties, {
+                new: true,
+                projection: { _id: 0, __v: 0 }, // We don't want to include _id and __v props from document
+            })) as ICarDomain;
             if (!updated) {
                 throw new CarError(ErrorCodes.CarStorage.NoFound, `Could not update, the car with UUID: ${serialUUID} was not found`);
             }

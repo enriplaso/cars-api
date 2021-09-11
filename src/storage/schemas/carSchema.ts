@@ -27,6 +27,5 @@ const CarMongoSchema = {
     },
 };
 
-const CarSchema: Schema = new Schema(CarMongoSchema);
+export const CarSchema: Schema = new Schema(CarMongoSchema);
 
-export default CarSchema;
