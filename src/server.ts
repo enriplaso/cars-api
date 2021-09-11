@@ -4,7 +4,7 @@ import express from 'express';
 import Container from 'typedi';
 import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
-import { CarRoutes } from './routes/CarRoutes';
+import { configureRoutes } from './routes/CarRoutes';
 import { SchemaValidator } from './validation/schemaValidator';
 import { CarJsonSchema, serialUUIDJsonSchema } from './validation/schemas/requestSchemas';
 import Ajv from 'ajv';
@@ -18,7 +18,7 @@ const main = async () => {
     Container.set(SchemaValidator, new SchemaValidator(ajv.compile(CarJsonSchema), ajv.compile(serialUUIDJsonSchema)));
 
     //configure routes
-    new CarRoutes(app, Container.get(CarController), Container.get(SchemaValidator)).configureRoutes();
+    configureRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
 
     connectMongoDB('mongodb://localhost:27017', 'carsdb');
 

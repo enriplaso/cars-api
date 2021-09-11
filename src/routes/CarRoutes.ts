@@ -2,27 +2,12 @@ import { Application } from 'express';
 import { CarController } from '../controller/carController';
 import { schemaValidation } from '../midlewares/schemaValidation';
 import { SchemaValidator } from '../validation/schemaValidator';
-//TODO change to function
-export class CarRoutes {
-    constructor(
-        private readonly app: Application,
-        private readonly carController: CarController,
-        private readonly validateCar: SchemaValidator,
-    ) {}
 
-    configureRoutes() {
-        this.app
-            .route(`/car`)
-            .post(
-                schemaValidation(this.validateCar.validateCar.bind(this.validateCar)),
-                this.carController.createNewCar.bind(this.carController),
-            );
+export const configureRoutes = (app: Application, carController: CarController, validateCar: SchemaValidator) => {
+    app.route(`/car`).post(schemaValidation(validateCar.validateCar.bind(validateCar)), carController.createNewCar.bind(carController));
 
-        this.app
-            .route(`/car/:serialUUID`)
-            .delete(
-                schemaValidation(this.validateCar.validateSerialUUID.bind(this.validateCar)),
-                this.carController.deletCarBySerialUUID.bind(this.carController),
-            );
-    }
-}
+    app.route(`/car/:serialUUID`).delete(
+        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        carController.deletCarBySerialUUID.bind(carController),
+    );
+};
