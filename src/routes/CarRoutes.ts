@@ -10,4 +10,16 @@ export const configureRoutes = (app: Application, carController: CarController, 
         schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
         carController.deletCarBySerialUUID.bind(carController),
     );
+
+    app.route(`/car/:serialUUID`).get(
+        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        carController.getCarBySerialUUID.bind(carController),
+    );
+
+    app.route(`/car/:serialUUID`).put(
+        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        carController.updateSingleProperties.bind(carController),
+    );
+
+    app.route(`/metadata`).get(carController.getMetadata.bind(carController));
 };

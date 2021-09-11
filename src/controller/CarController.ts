@@ -44,7 +44,7 @@ export class CarController {
         }
     }
 
-    public async getMetadata(res: Response) {
+    public async getMetadata(_: Request, res: Response) {
         try {
             const metadata = await this.carService.getMetadata();
             res.status(200).send(metadata);
@@ -54,6 +54,7 @@ export class CarController {
     }
 
     private handleError(error: Error | any, res: Response) {
+        console.warn(error);
         if (error instanceof CarError) {
             switch (error.code) {
                 case ErrorCodes.CarStorage.AlreadyExists:
@@ -69,7 +70,6 @@ export class CarController {
                     break;
             }
         }
-        console.info(error);
         res.status(500).send();
     }
 }
