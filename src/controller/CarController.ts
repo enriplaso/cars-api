@@ -19,9 +19,35 @@ export class CarController {
 
     public async deletCarBySerialUUID(req: Request, res: Response) {
         try {
-            const serialUUID = req.params.serialUUID as string;
-            await this.carService.deleteBySerialUUID(serialUUID);
+            await this.carService.deleteBySerialUUID(req.params.serialUUID);
             res.status(200).send();
+        } catch (error) {
+            this.handleError(error, res);
+        }
+    }
+
+    public async getCarBySerialUUID(req: Request, res: Response) {
+        try {
+            const foundCar = await this.carService.getBySerialUUID(req.params.serialUUID);
+            res.status(200).send(foundCar);
+        } catch (error) {
+            this.handleError(error, res);
+        }
+    }
+
+    public async updateSingleProperties(req: Request, res: Response) {
+        try {
+            const udatedCar = await this.carService.updateSingleProperties(req.params.serialUUID, req.body);
+            res.status(200).send(udatedCar);
+        } catch (error) {
+            this.handleError(error, res);
+        }
+    }
+
+    public async getMetadata(res: Response) {
+        try {
+            const metadata = await this.carService.getMetadata();
+            res.status(200).send(metadata);
         } catch (error) {
             this.handleError(error, res);
         }
@@ -39,7 +65,7 @@ export class CarController {
                     break;
 
                 case ErrorCodes.CarStorage.NoFound:
-                    res.status(400).send({ error: error.code });
+                    res.status(404).send({ error: error.code });
                     break;
             }
         }
