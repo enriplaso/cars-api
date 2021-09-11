@@ -18,4 +18,11 @@ export interface ISchemaValidator {
      * @throws CarError if is not valid
      */
     validateSerialUUID(request: Request): void;
+
+    /**
+     * Validates the properties of the request path during update
+     * @param request
+     * @throws CarError if is not valid
+     */
+    validateUpdateProperties(request: Request): void;
 }

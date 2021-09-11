@@ -18,6 +18,7 @@ export const configureRoutes = (app: Application, carController: CarController, 
 
     app.route(`/car/:serialUUID`).put(
         schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        schemaValidation(validateCar.validateUpdateProperties.bind(validateCar)),
         carController.updateSingleProperties.bind(carController),
     );
 

@@ -6,7 +6,7 @@ import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
 import { configureRoutes } from './routes/CarRoutes';
 import { SchemaValidator } from './validation/schemaValidator';
-import { carJsonSchema, serialUUIDJsonSchema } from './validation/schemas/requestSchemas';
+import { carJsonSchema, serialUUIDJsonSchema, singlePropertiesJsonSchema } from './validation/schemas/requestSchemas';
 import Ajv from 'ajv';
 
 const main = async () => {
@@ -15,7 +15,10 @@ const main = async () => {
 
     const ajv = new Ajv();
     //Intializes schema validation in DI
-    Container.set(SchemaValidator, new SchemaValidator(ajv.compile(carJsonSchema), ajv.compile(serialUUIDJsonSchema)));
+    Container.set(
+        SchemaValidator,
+        new SchemaValidator(ajv.compile(carJsonSchema), ajv.compile(serialUUIDJsonSchema), ajv.compile(singlePropertiesJsonSchema)),
+    );
 
     //configure routes
     configureRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
