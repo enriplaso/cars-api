@@ -5,10 +5,9 @@ export const serialUUIDJsonSchema = {
     maxLength: 36,
 };
 
-export const CarJsonSchema = {
+export const singlePropertiesJsonSchema = {
     title: 'Car Schema',
     description: 'Validates the A car objec that is passed in create car API request',
-    required: ['brand', 'color', 'model'],
     type: 'object',
     properties: {
         serialUUID: serialUUIDJsonSchema,
@@ -23,5 +22,14 @@ export const CarJsonSchema = {
             type: 'string',
         },
     },
+    additionalProperties: false,
+};
+
+export const carJsonSchema = {
+    title: 'Car Schema',
+    description: 'Validates the A car objec that is passed in create car API request',
+    required: ['brand', 'color', 'model'],
+    type: 'object',
+    properties: singlePropertiesJsonSchema.properties,
     additionalProperties: false, //additionalProperties prop is not available in Mongose schemas
 };
