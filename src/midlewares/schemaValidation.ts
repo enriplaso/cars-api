@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';
+import { StatusCodes } from 'http-status-codes';
 
 /**
  *  This midleware validates request body/params through a json schema given a validator function
@@ -19,7 +20,7 @@ export const schemaValidation = (validate: (req: Request) => void) => {
             if (error instanceof CarError) {
                 errorCode = error.code;
             }
-            res.status(400).send({ error: errorCode });
+            res.status(StatusCodes.BAD_REQUEST).send({ error: errorCode });
         }
     };
 };

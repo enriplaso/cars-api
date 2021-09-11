@@ -3,7 +3,7 @@ import { Service } from 'typedi';
 import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';
 import { CarService } from '../services/carService';
-
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 @Service()
 export class CarController {
     constructor(private readonly carService: CarService) {}
@@ -11,7 +11,7 @@ export class CarController {
     public async createNewCar(req: Request, res: Response) {
         try {
             const CarUUID = await this.carService.create(req.body);
-            res.status(201).send({ serialUUID: CarUUID });
+            res.status(StatusCodes.CREATED).send({ serialUUID: CarUUID });
         } catch (error) {
             this.handleError(error, res);
         }
@@ -20,7 +20,7 @@ export class CarController {
     public async deletCarBySerialUUID(req: Request, res: Response) {
         try {
             await this.carService.deleteBySerialUUID(req.params.serialUUID);
-            res.status(200).send();
+            res.status(StatusCodes.OK).send();
         } catch (error) {
             this.handleError(error, res);
         }
@@ -29,7 +29,7 @@ export class CarController {
     public async getCarBySerialUUID(req: Request, res: Response) {
         try {
             const foundCar = await this.carService.getBySerialUUID(req.params.serialUUID);
-            res.status(200).send(foundCar);
+            res.status(StatusCodes.OK).send(foundCar);
         } catch (error) {
             this.handleError(error, res);
         }
@@ -38,7 +38,7 @@ export class CarController {
     public async updateSingleProperties(req: Request, res: Response) {
         try {
             const udatedCar = await this.carService.updateSingleProperties(req.params.serialUUID, req.body);
-            res.status(200).send(udatedCar);
+            res.status(StatusCodes.OK).send(udatedCar);
         } catch (error) {
             this.handleError(error, res);
         }
@@ -47,7 +47,7 @@ export class CarController {
     public async getMetadata(_: Request, res: Response) {
         try {
             const metadata = await this.carService.getMetadata();
-            res.status(200).send(metadata);
+            res.status(StatusCodes.OK).send(metadata);
         } catch (error) {
             this.handleError(error, res);
         }
@@ -58,18 +58,18 @@ export class CarController {
         if (error instanceof CarError) {
             switch (error.code) {
                 case ErrorCodes.CarStorage.AlreadyExists:
-                    res.status(409).send({ error: error.code });
+                    res.status(StatusCodes.CONFLICT).send({ error: error.code });
                     break;
 
                 case ErrorCodes.CarStorage.General:
-                    res.status(400).send({ error: error.code });
+                    res.status(StatusCodes.BAD_REQUEST).send({ error: error.code });
                     break;
 
                 case ErrorCodes.CarStorage.NoFound:
-                    res.status(404).send({ error: error.code });
+                    res.status(StatusCodes.NOT_FOUND).send({ error: error.code });
                     break;
             }
         }
-        res.status(500).send();
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: ReasonPhrases.INTERNAL_SERVER_ERROR });
     }
 }
