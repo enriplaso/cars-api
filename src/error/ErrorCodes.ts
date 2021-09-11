@@ -6,5 +6,7 @@ export const ErrorCodes = {
     },
     Validation: {
         Schema: 'com.car.schema.not.valid',
+        SerialUUID: 'com.car.serialUUID.not.valid',
+        General: 'com.car.validation.general.no.valid'
     },
 };

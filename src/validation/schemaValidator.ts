@@ -1,20 +1,23 @@
 import { Service } from 'typedi';
-import Ajv from 'ajv';
 import { ISchemaValidator } from './ISchemaValidator';
 import { AnyValidateFunction } from 'ajv/dist/core';
-import { CarJsonSchema } from './schemas/requestSchemas';
+import { Request } from 'express';
+import { CarError } from '../error/CarError';
+import { ErrorCodes } from '../error/ErrorCodes';
 
 @Service()
 export class SchemaValidator implements ISchemaValidator {
-    constructor(private ajv: any, private isCarValid: AnyValidateFunction) {}
+    constructor(private readonly isCarValid: AnyValidateFunction, private readonly isSerialUUIDValid: AnyValidateFunction) {}
 
-    public compile(): void {
-        this.ajv = new Ajv({ strict: true });
-        this.isCarValid = this.ajv.compile(CarJsonSchema);
+    public validateCar(request: Request): void {
+        if (!this.isCarValid(request.body)) {
+            throw new CarError(ErrorCodes.Validation.Schema, 'The given Object is not valid');
+        }
     }
 
-    public validateCar(car: any): boolean {
-        const isValid = this.isCarValid(car) as boolean;
-        return isValid;
+    public validateSerialUUID(request: Request): void {
+        if (!this.isSerialUUIDValid(request.params?.serialUUID)) {
+            throw new CarError(ErrorCodes.Validation.SerialUUID, 'The given serialUUID is not valid');
+        }
     }
 }

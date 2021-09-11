@@ -17,7 +17,7 @@ export interface ICarService {
      * Finds a retunts a Car object given its serial number
      * @param serialUUID
      */
-    getCarBySerialUUID(serialUUID: string): Promise<ICarDomain>;
+    getBySerialUUID(serialUUID: string): Promise<ICarDomain>;
 
     /**
      * Updates a single properies of a Car

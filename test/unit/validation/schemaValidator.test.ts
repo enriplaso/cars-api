@@ -1,18 +1,21 @@
-import { expect } from 'chai';
+/*import { expect } from 'chai';
 import { randomUUID } from 'crypto';
 import 'mocha';
 import { Color } from '../../../src/storage/domain/ICarDomain';
 import { CarModel } from '../../../src/storage/models/CarModel';
-import * as dbHandler from '../helper/dbHandle';
+import { SchemaValidator } from '../../../src/validation/schemaValidator';
 
-describe('CarModel tests', function () {
+describe('Schema validation tests', function () {
     this.timeout(120000);
+    const ajv = new Ajv();
+
+    const schemaValidator = new SchemaValidator(ajv);
     beforeEach(async function () {
-        await dbHandler.connect();
+      
     });
 
     afterEach(async function () {
-        await dbHandler.closeDatabase();
+      
     });
 
     it('Should not allow additional properies', async function () {
@@ -30,3 +33,4 @@ describe('CarModel tests', function () {
         expect(createdCar.get('additionalProp')).to.be.undefined;
     });
 });
+*/

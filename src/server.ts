@@ -1,18 +1,22 @@
 import 'reflect-metadata';
 
 import express from 'express';
-
-import Container from 'typedi';import { CarController } from './controller/CarController';
+import Container from 'typedi';
+import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
 import { CarRoutes } from './routes/CarRoutes';
 import { SchemaValidator } from './validation/schemaValidator';
+import { CarJsonSchema, serialUUIDJsonSchema } from './validation/schemas/requestSchemas';
+import Ajv from 'ajv';
 
 const main = async () => {
     const app = express();
     app.use(express.json());
 
-    //Intializes schema validation function
-    Container.get(SchemaValidator).compile();
+    const ajv = new Ajv();
+    //Intializes schema validation in DI
+    Container.set(SchemaValidator, new SchemaValidator(ajv.compile(CarJsonSchema), ajv.compile(serialUUIDJsonSchema)));
+
     //configure routes
     new CarRoutes(app, Container.get(CarController), Container.get(SchemaValidator)).configureRoutes();
 

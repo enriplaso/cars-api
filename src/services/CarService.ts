@@ -23,6 +23,7 @@ export class CarService implements ICarService {
             throw error instanceof CarError ? error : new CarError(ErrorCodes.CarStorage.General, (error as Error).message);
         }
     }
+
     async deleteBySerialUUID(serialUUID: string): Promise<void> {
         try {
             await CarModel.deleteOne({ serialUUID });
@@ -31,7 +32,7 @@ export class CarService implements ICarService {
         }
     }
 
-    async getCarBySerialUUID(serialUUID: string): Promise<ICarDomain> {
+    async getBySerialUUID(serialUUID: string): Promise<ICarDomain> {
         try {
             const foundCar = (await CarModel.findOne({ serialUUID })) as ICarModel;
             if (!foundCar) {

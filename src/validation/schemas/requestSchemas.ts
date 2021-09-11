@@ -1,12 +1,8 @@
 export const serialUUIDJsonSchema = {
-    required: ['serialUUID'],
-    type: 'object',
-    serialUUID: {
-        type: 'string',
-        pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
-        minLength: 36,
-        maxLength: 36,
-    },
+    type: 'string',
+    pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+    minLength: 36,
+    maxLength: 36,
 };
 
 export const CarJsonSchema = {
@@ -15,7 +11,7 @@ export const CarJsonSchema = {
     required: ['brand', 'color', 'model'],
     type: 'object',
     properties: {
-        serialUUID: serialUUIDJsonSchema.serialUUID,
+        serialUUID: serialUUIDJsonSchema,
         brand: {
             type: 'string',
         },

@@ -1,21 +1,25 @@
 import { Request, Response, NextFunction } from 'express';
+import { CarError } from '../error/CarError';
 import { ErrorCodes } from '../error/ErrorCodes';
 
 /**
- *  This midleware validates request body through a json schema given a validate function
+ *  This midleware validates request body/params through a json schema given a validator function
  * @param req
  * @param res
  * @param next
  * @param validate This function returns true if the body is valid
  */
-export const schemaValidation = (validate: (body: any) => boolean) => {
+export const schemaValidation = (validate: (req: Request) => void) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        if (validate(req.body)) {
+        try {
+            validate(req);
             next();
-        } else {
-            res.status(400).send({
-                error: ErrorCodes.Validation.Schema,
-            });
+        } catch (error) {
+            let errorCode = ErrorCodes.Validation.General;
+            if (error instanceof CarError) {
+                errorCode = error.code;
+            }
+            res.status(400).send({ error: errorCode });
         }
     };
 };

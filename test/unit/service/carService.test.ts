@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import 'mocha';
 import { CarError } from '../../../src/error/CarError';
 import { ErrorCodes } from '../../../src/error/ErrorCodes';
-import { CarService } from '../../../src/services/CarService';
+import { CarService } from '../../../src/services/carService';
 import { Color, ICarDomain } from '../../../src/storage/domain/ICarDomain';
 import * as dbHandler from '../helper/dbHandle';
 
@@ -111,7 +111,7 @@ describe('CarService tests', function () {
         };
         const serialUUID: string = await carService.create(car);
 
-        const foundCar = await carService.getCarBySerialUUID(serialUUID);
+        const foundCar = await carService.getBySerialUUID(serialUUID);
 
         expect(foundCar).to.be.not.undefined;
         expect(foundCar.brand).to.equal(car.brand);
@@ -130,7 +130,7 @@ describe('CarService tests', function () {
         const nonExistingSerialUUID = randomUUID();
 
         try {
-            await carService.getCarBySerialUUID(nonExistingSerialUUID);
+            await carService.getBySerialUUID(nonExistingSerialUUID);
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;

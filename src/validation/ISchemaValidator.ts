@@ -1,15 +1,21 @@
 /**
  *  Clase to instanciat Avj validator and compiles all the schemas
  */
+
+import { Request } from 'express';
+
 export interface ISchemaValidator {
     /**
-     * Compiles the schemas,
+     * Validates object with the schema
+     * @param request
+     * @throws CarError if is not valid
      */
-    compile(): void;
+    validateCar(request: Request): void;
 
     /**
-     * Validates object with the schema
-     * @param car
+     * Validates the SerialUUID contained im the request path
+     * @param request
+     * @throws CarError if is not valid
      */
-    validateCar(car: any): boolean;
+    validateSerialUUID(request: Request): void;
 }
