@@ -6,14 +6,11 @@
   "author": "Enrique Plaza",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/main.ts",
+    "start": "node ./dist/server.js",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "test": "mocha -r ts-node/register 'test/**/*.ts'",
     "clean": "rm -rf dist build package",
-    "ts-node": "ts-node",
-    "docs": "typedoc --entryPoints src/main.ts",
-    "build": "tsc -p tsconfig.json",
-    "build-all": "yarn clean && yarn build && yarn esbuild-node && yarn esbuild-browser"
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "ajv": "^8.6.2",

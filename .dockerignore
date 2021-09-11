@@ -1,0 +1,7 @@
+
+#ingnore Code and tests
+/tests
+/dist
+
+#dependencies
+node_modules
