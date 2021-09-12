@@ -1,8 +1,8 @@
 import { Application } from 'express';
 import { CarController } from '../controller/carController';
 import { UserController } from '../controller/userController';
-import { validateToken } from '../midlewares/authorization';
-import { schemaValidation } from '../midlewares/schemaValidation';
+import { validateToken } from '../middleware/authorization';
+import { schemaValidation } from '../middleware/schemaValidation';
 import { SchemaValidator } from '../validation/schemaValidator';
 
 export const configureCarRoutes = (app: Application, carController: CarController, validator: SchemaValidator) => {

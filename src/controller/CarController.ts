@@ -4,9 +4,10 @@ import { CarError } from '../error/carError';
 import { ErrorCodes } from '../error/errorCodes';
 import { CarService } from '../services/carService';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { ICarController } from './ICarController';
 
 @Service()
-export class CarController {
+export class CarController implements ICarController {
     constructor(private readonly carService: CarService) {}
 
     public async createNewCar(req: Request, res: Response): Promise<void> {

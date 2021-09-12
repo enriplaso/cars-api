@@ -7,12 +7,13 @@ import { IUserDomain } from '../storage/domain/IUserDomain';
 import { UserError } from '../error/userError';
 import { ErrorCodes } from '../error/errorCodes';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { IUserController } from './IUserControler';
 
 const TOKEN_SECRET = process.env['TOKEN_SECRET'] || 'token-secret';
 const ROUNDS = 10;
 
 @Service()
-export class UserController {
+export class UserController implements IUserController {
     constructor(private readonly userService: UserService) {}
 
     public async login(req: Request, res: Response): Promise<void> {
