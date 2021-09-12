@@ -1,8 +1,8 @@
 # Cars Manager App
 Application for cars data management stored in MongoDb.
 
-## Runing the application
-### Docker
+## Running the application with Doker
+
 Please make sure you don't have any other running mongo container.
 * In your root project folder, open a termial and run: ```docker-compose up --build```.
 * Wait till build is finished and you see Server Started" and "MongoDB Connected..." in the *cars-api*
