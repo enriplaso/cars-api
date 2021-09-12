@@ -120,7 +120,9 @@ Response example
 
 The Project is configured to work with VSCode.
 
-You will need a Mongo database. you can get a db running wiht Docker as follow: ```docker run -d -p 27017:27017 --name mongodb mongo```
+You will need a Mongo database. You can get one running wiht Docker as follow:
+
+ ```docker run -d -p 27017:27017 --name mongodb mongo```
 
 #### Running locally
 
