@@ -5,36 +5,42 @@ import { validateToken } from '../midlewares/authorization';
 import { schemaValidation } from '../midlewares/schemaValidation';
 import { SchemaValidator } from '../validation/schemaValidator';
 
-export const configureCarRoutes = (app: Application, carController: CarController, validateCar: SchemaValidator) => {
+export const configureCarRoutes = (app: Application, carController: CarController, validator: SchemaValidator) => {
     app.route(`/car`).post(
         validateToken,
-        schemaValidation(validateCar.validateCar.bind(validateCar)),
+        schemaValidation(validator.validateCar.bind(validator)),
         carController.createNewCar.bind(carController),
     );
 
     app.route(`/car/:serialUUID`).delete(
         validateToken,
-        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        schemaValidation(validator.validateSerialUUID.bind(validator)),
         carController.deletCarBySerialUUID.bind(carController),
     );
 
     app.route(`/car/:serialUUID`).get(
         validateToken,
-        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
+        schemaValidation(validator.validateSerialUUID.bind(validator)),
         carController.getCarBySerialUUID.bind(carController),
     );
 
     app.route(`/car/:serialUUID`).put(
         validateToken,
-        schemaValidation(validateCar.validateSerialUUID.bind(validateCar)),
-        schemaValidation(validateCar.validateUpdateProperties.bind(validateCar)),
+        schemaValidation(validator.validateSerialUUID.bind(validator)),
+        schemaValidation(validator.validateUpdateProperties.bind(validator)),
         carController.updateSingleProperties.bind(carController),
     );
 
     app.route(`/metadata`).get(validateToken, carController.getMetadata.bind(carController));
 };
 
-export const configureUserRoutes = (app: Application, userController: UserController) => {
-    app.route(`/signup`).post(userController.signUp.bind(userController));
-    app.route(`/login`).post(userController.login.bind(userController));
+export const configureUserRoutes = (app: Application, userController: UserController, validator: SchemaValidator) => {
+    app.route(`/signup`).post(
+        schemaValidation(validator.validateUserCredentials.bind(validator)),
+        userController.signUp.bind(userController),
+    );
+    app.route(`/login`).post(
+        schemaValidation(validator.validateUserCredentials.bind(validator)),
+        userController.login.bind(userController),
+    );
 };

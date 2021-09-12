@@ -7,7 +7,7 @@ export const serialUUIDJsonSchema = {
 
 export const singlePropertiesJsonSchema = {
     title: 'Car Schema',
-    description: 'Validates the A car objec that is passed in create car API request',
+    description: 'update single properties for a car API request',
     type: 'object',
     properties: {
         serialUUID: serialUUIDJsonSchema,
@@ -27,9 +27,28 @@ export const singlePropertiesJsonSchema = {
 
 export const carJsonSchema = {
     title: 'Car Schema',
-    description: 'Validates the A car objec that is passed in create car API request',
+    description: 'Validates the A car objec that is passed in a create car API request',
     required: ['brand', 'color', 'model'],
     type: 'object',
     properties: singlePropertiesJsonSchema.properties,
     additionalProperties: false, //additionalProperties prop is not available in Mongose schemas
+};
+
+export const emailJsonSchema = {
+    type: 'string',
+    pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
+    // format: 'email', //fomrat does not work
+};
+
+export const userJsonSchema = {
+    title: 'User Schema',
+    required: ['email', 'password'],
+    type: 'object',
+    properties: {
+        email: emailJsonSchema,
+        password: {
+            type: 'string',
+        },
+    },
+    additionalProperties: false,
 };

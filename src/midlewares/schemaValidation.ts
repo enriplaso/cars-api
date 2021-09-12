@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { CarError } from '../error/carError';
 import { ErrorCodes } from '../error/errorCodes';
 import { StatusCodes } from 'http-status-codes';
+import { UserError } from '../error/userError';
 
 /**
  *  This midleware validates request body/params through a json schema given a validator function
@@ -16,8 +17,8 @@ export const schemaValidation = (validate: (req: Request) => void) => {
             validate(req);
             next();
         } catch (error) {
-            let errorCode = ErrorCodes.Validation.General;
-            if (error instanceof CarError) {
+            let errorCode = ErrorCodes.CarValidation.General;
+            if (error instanceof CarError || error instanceof UserError) {
                 errorCode = error.code;
             }
             res.status(StatusCodes.BAD_REQUEST).send({ error: errorCode });

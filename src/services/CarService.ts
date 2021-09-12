@@ -4,7 +4,7 @@ import { CarModel, ICarModel } from '../storage/models/carModel';
 import { ICarService } from './ICarService';
 import { CarError } from '../error/carError';
 import { ErrorCodes } from '../error/errorCodes';
-import { ICarMetaData } from '../storage/domain/ICarMetadata';
+import { ICarMetaDataDomain } from '../storage/domain/ICarMetadataDomain';
 
 @Service()
 export class CarService implements ICarService {
@@ -59,7 +59,7 @@ export class CarService implements ICarService {
         }
     }
 
-    public async getMetadata(): Promise<ICarMetaData> {
+    public async getMetadata(): Promise<ICarMetaDataDomain> {
         const aggregatorOpts = [
             {
                 //Processes multiple aggregation pipelines
@@ -92,8 +92,8 @@ export class CarService implements ICarService {
         }
     }
 
-    private transformRawMetadata(rawMetadata: Array<any>): ICarMetaData {
-        const metadata: ICarMetaData = {
+    private transformRawMetadata(rawMetadata: Array<any>): ICarMetaDataDomain {
+        const metadata: ICarMetaDataDomain = {
             numberOfCars: rawMetadata[0].all[0]?.count || 0,
             colors: {},
             brands: {},

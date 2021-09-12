@@ -25,4 +25,11 @@ export interface ISchemaValidator {
      * @throws CarError if is not valid
      */
     validateUpdateProperties(request: Request): void;
+
+    /**
+     * Validate user email and password
+     * @param request
+     * @throws UserError if is not valid
+     */
+    validateUserCredentials(request: Request): void;
 }

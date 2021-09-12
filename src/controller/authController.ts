@@ -12,7 +12,7 @@ const TOKEN_SECRET = process.env['TOKEN_SECRET'] || 'token-secret';
 const ROUNDS = 10;
 
 @Service()
-export class UserController {
+export class authController {
     constructor(private readonly userService: UserService) {}
 
     public async login(req: Request, res: Response): Promise<void> {
