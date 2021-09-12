@@ -1,5 +1,5 @@
-import { ICarDomain } from '../../src/storage/domain/ICarDomain';
-import { ICarMetaDataDomain } from '../../src/storage/domain/ICarMetaDataDomain';
+import { ICarDomain } from '../../../src/storage/domain/ICarDomain';
+import { ICarMetaDataDomain } from '../../../src/storage/domain/ICarMetaDataDomain';
 
 var axios = require('axios');
 

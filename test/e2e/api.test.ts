@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 import { Color, ICarDomain } from '../../src/storage/domain/ICarDomain';
-import { createACar, createRamdomUserEmail, deleteACar, getACar, getMetadata, login, signUp, updateACar } from './requestHelper';
+import { createACar, createRamdomUserEmail, deleteACar, getACar, getMetadata, login, signUp, updateACar } from './helper/requestHelper';
 
 /**
  * Make sure that the server is up and runnuing and connetion to DB establish
