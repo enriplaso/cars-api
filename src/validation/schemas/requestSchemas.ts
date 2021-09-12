@@ -36,8 +36,7 @@ export const carJsonSchema = {
 
 export const emailJsonSchema = {
     type: 'string',
-    pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
-    // format: 'email', //format does not work
+    pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$',
 };
 
 export const userJsonSchema = {

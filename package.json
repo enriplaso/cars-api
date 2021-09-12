@@ -1,7 +1,7 @@
 {
-  "name": "typescpript-base-project",
+  "name": "cars-api",
   "version": "1.0.0",
-  "description": "Express resfull API with typedi DI configured for VS",
+  "description": "Express resfull API for cars management",
   "main": "./dist/tsc/main.js",
   "author": "Enrique Plaza",
   "license": "MIT",

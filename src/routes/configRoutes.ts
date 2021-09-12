@@ -5,7 +5,7 @@ import { validateToken } from '../middleware/authorization';
 import { schemaValidation } from '../middleware/schemaValidation';
 import { SchemaValidator } from '../validation/schemaValidator';
 
-export const configureCarRoutes = (app: Application, carController: CarController, validator: SchemaValidator) => {
+export const configureCarRoutes = (app: Application, carController: CarController, validator: SchemaValidator): void => {
     app.route(`/car`).post(
         validateToken,
         schemaValidation(validator.validateCar.bind(validator)),
@@ -34,7 +34,7 @@ export const configureCarRoutes = (app: Application, carController: CarControlle
     app.route(`/metadata`).get(validateToken, carController.getMetadata.bind(carController));
 };
 
-export const configureUserRoutes = (app: Application, userController: UserController, validator: SchemaValidator) => {
+export const configureUserRoutes = (app: Application, userController: UserController, validator: SchemaValidator): void => {
     app.route(`/signup`).post(
         schemaValidation(validator.validateUserCredentials.bind(validator)),
         userController.signUp.bind(userController),
