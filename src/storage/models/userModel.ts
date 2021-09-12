@@ -6,6 +6,5 @@ export interface IUserModel extends IUserDomain, Document {}
 
 /**
  * Mongose USER Model, this would be equivalent to an User DAO
- *
  */
 export const UserModel: Model<IUserModel> = model('User', UserSchema);

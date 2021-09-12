@@ -14,6 +14,5 @@ CarSchema.pre<ICarModel>('save', function () {
 
 /**
  * Mongose Car Model, this would be equivalent to a DAO
- *
  */
 export const CarModel: Model<ICarModel> = model('Car', CarSchema);
