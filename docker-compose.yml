@@ -2,11 +2,12 @@ version: "3"
 services:
         server:
             container_name: cars-api
-            #image: latest123/login-app
             restart: always
             build: .
             environment:
               - MONGO_URI=mongodb://mongodb:27017
+              - TOKEN_SECRET=token-secret 
+              - DB_NAME=carsdb
             ports:
               - "3000:3000"
             links:

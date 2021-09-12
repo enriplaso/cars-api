@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-
 import express from 'express';
+import cors from 'express';
 import Container from 'typedi';
 import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
@@ -16,8 +16,10 @@ import {
 import Ajv from 'ajv';
 import { UserController } from './controller/userController';
 
+const SERVER_PORT = 3000;
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 const ajv = new Ajv();
 //Intializes schema validation in DI
@@ -36,8 +38,8 @@ Container.set(
 configureCarRoutes(app, Container.get(CarController), Container.get(SchemaValidator));
 configureUserRoutes(app, Container.get(UserController), Container.get(SchemaValidator));
 //Db connection
-connectMongoDB(process.env['MONGO_URI'] || 'mongodb://localhost:27017', 'carsdb');
+connectMongoDB(process.env['MONGO_URI'] || 'mongodb://localhost:27017', process.env['DB_NAME'] || 'carsdb');
 
-app.listen(3000, () => {
-    console.log('Server started');
+app.listen(SERVER_PORT, () => {
+    console.info('Server started');
 });

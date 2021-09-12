@@ -1,7 +1,7 @@
 export const ErrorCodes = {
     CarStorage: {
         General: 'com.car.storage.general',
-        AlreadyExists: 'com.car.storage.alleadyExists',
+        AlreadyExists: 'com.car.storage.alreadyExists',
         NoFound: 'com.car.storage.NoFound',
     },
     CarValidation: {
@@ -16,7 +16,7 @@ export const ErrorCodes = {
     UserStorage: {
         General: 'com.user.storage.general',
         NoFound: 'com.user.storage.NoFound',
-        AlreadyExists: 'com.user.storage.NoFound',
+        AlreadyExists: 'com.user.storage.alreadyExists',
     },
     UserLogin: {
         InvalidPassword: 'com.user.login.password.invalid',

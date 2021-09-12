@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node ./dist/server.js",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "test": "mocha -r ts-node/register 'test/unit/**/*.ts'",
+    "test:unit": "mocha -r ts-node/register 'test/unit/**/*.ts'",
+    "test:e2e": "mocha -r ts-node/register 'test/e2e/**/*.ts'",
     "clean": "rm -rf dist build package",
     "build": "tsc -p tsconfig.json"
   },
@@ -32,6 +33,7 @@
     "@types/node": "^16.7.5",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "axios": "^0.21.4",
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",

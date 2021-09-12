@@ -15,10 +15,18 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Tests",
+            "name": "Launch Unit Tests",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "webRoot": "${workspaceFolder}",
-            "preLaunchTask": "npm: test"
+            "preLaunchTask": "npm: test:unit"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch E2E Tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "npm: test:e2e"
         }
     ]
 }
