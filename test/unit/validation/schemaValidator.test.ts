@@ -2,9 +2,14 @@ import { expect } from 'chai';
 import { randomUUID } from 'crypto';
 import 'mocha';
 import { Color } from '../../../src/storage/domain/ICarDomain';
-//import { CarModel } from '../../../src/storage/models/CarModel';
 import { SchemaValidator } from '../../../src/validation/schemaValidator';
-import { carJsonSchema, serialUUIDJsonSchema, singlePropertiesJsonSchema } from '../../../src/validation/schemas/requestSchemas';
+import {
+    carJsonSchema,
+    serialUUIDJsonSchema,
+    singlePropertiesJsonSchema,
+    userJsonSchema,
+    emailJsonSchema,
+} from '../../../src/validation/schemas/requestSchemas';
 import Ajv from 'ajv';
 import { Request } from 'express';
 import { fail } from 'assert';
@@ -19,6 +24,8 @@ describe('Schema validation tests', function () {
         ajv.compile(carJsonSchema),
         ajv.compile(serialUUIDJsonSchema),
         ajv.compile(singlePropertiesJsonSchema),
+        ajv.compile(userJsonSchema),
+        ajv.compile(emailJsonSchema),
     );
 
     it('Should not throw when a car object is valid', async function () {
@@ -63,7 +70,7 @@ describe('Schema validation tests', function () {
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;
-            expect((error as CarError).code).to.be.equal(ErrorCodes.Validation.Schema);
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarValidation.Schema);
         }
     });
 
@@ -81,7 +88,7 @@ describe('Schema validation tests', function () {
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;
-            expect((error as CarError).code).to.be.equal(ErrorCodes.Validation.Schema);
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarValidation.Schema);
         }
     });
 
@@ -98,7 +105,7 @@ describe('Schema validation tests', function () {
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;
-            expect((error as CarError).code).to.be.equal(ErrorCodes.Validation.Schema);
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarValidation.Schema);
         }
     });
 
@@ -118,7 +125,7 @@ describe('Schema validation tests', function () {
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;
-            expect((error as CarError).code).to.be.equal(ErrorCodes.Validation.SerialUUID);
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarValidation.SerialUUID);
         }
     });
 
@@ -144,7 +151,7 @@ describe('Schema validation tests', function () {
             fail('should fail');
         } catch (error) {
             expect(error instanceof CarError).to.be.true;
-            expect((error as CarError).code).to.be.equal(ErrorCodes.Validation.Schema);
+            expect((error as CarError).code).to.be.equal(ErrorCodes.CarValidation.Schema);
         }
     });
 });
