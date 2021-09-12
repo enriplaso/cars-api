@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import express from 'express';
-import cors from 'express';
 import Container from 'typedi';
 import { CarController } from './controller/carController';
 import { connectMongoDB } from './storage/connectMongoDB';
@@ -19,7 +18,6 @@ import { UserController } from './controller/userController';
 const SERVER_PORT = 3000;
 const app = express();
 app.use(express.json());
-app.use(cors())
 
 const ajv = new Ajv();
 //Intializes schema validation in DI
