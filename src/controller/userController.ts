@@ -17,7 +17,7 @@ export class UserController {
 
     public async login(req: Request, res: Response): Promise<void> {
         try {
-            const user = await this.userService.get(req.body?.email);
+            const user = await this.userService.getByEmail(req.body?.email);
 
             bcrypt.compare(req.body.password, user.password, (error, match) => {
                 if (error) {

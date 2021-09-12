@@ -10,5 +10,5 @@ export interface IUserService {
      * Gets an user given his email
      * @param email
      */
-    get(email: string): Promise<IUserDomain>;
+    getByEmail(email: string): Promise<IUserDomain>;
 }

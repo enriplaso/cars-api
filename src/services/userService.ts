@@ -20,7 +20,7 @@ export class UserService implements IUserService {
         }
     }
 
-    public async get(email: string): Promise<IUserDomain> {
+    public async getByEmail(email: string): Promise<IUserDomain> {
         try {
             const foundUser = (await UserModel.findOne({ email }, { _id: 0, __v: 0 })) as IUserDomain;
             if (!foundUser) {

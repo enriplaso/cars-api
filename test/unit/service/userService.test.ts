@@ -24,7 +24,7 @@ describe('CarService tests', function () {
             password: '1234567',
         };
         await userService.create(user);
-        const createdUser = await userService.get(user.email);
+        const createdUser = await userService.getByEmail(user.email);
 
         expect(createdUser).to.be.not.undefined;
         expect(createdUser.email).to.equal(user.email);
@@ -51,7 +51,7 @@ describe('CarService tests', function () {
         const userService = new UserService();
 
         try {
-            await userService.get('some@email.com');
+            await userService.getByEmail('some@email.com');
             fail('should fail');
         } catch (error) {
             expect(error instanceof UserError).to.be.true;
